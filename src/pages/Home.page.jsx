@@ -16,14 +16,34 @@ const HomePage = () => {
   const [onlineStreamEvents, setOnlineStreamEvents] = useState([]);
 
   useEffect(() => {
-    const requiestTopRatedMovies = async () => {
-      const getTopRatedMovies = await axios.get(
-        'https://api.themoviedb.org/3/movie/top_rated?api_key=29404698e1353363f45e25ea5f8e757a'
+    const requestPopularMovies = async () => {
+      const getPopularMovies = await axios.get(
+        '/movie/popular'
       );
-      setRecommendedMovies(getTopRatedMovies.data.results); //jo api se json aya h usme results wala object hi humara data h
+      setRecommendedMovies(getPopularMovies.data.results); //jo api se json aya h usme results wala object hi humara data h
     };
-    requiestTopRatedMovies();
+    requestPopularMovies();
   }, []); //empty dependency means we only want data once at the time of loading of the componnent
+
+  useEffect(() => {
+    const requestTopRatedMovies = async () => {
+      const getTopRatedMovies = await axios.get(
+        '/movie/top_rated'
+      );
+      setPremierMovies(getTopRatedMovies.data.results); //jo api se json aya h usme results wala object hi humara data h
+    };
+    requestTopRatedMovies();
+  }, []);
+
+  useEffect(() => {
+    const requestUpcomingMovies = async () => {
+      const getUpcomingMovies = await axios.get(
+        '/movie/upcoming'
+      );
+      setOnlineStreamEvents(getUpcomingMovies.data.results); //jo api se json aya h usme results wala object hi humara data h
+    };
+    requestUpcomingMovies();
+  }, []);
 
   return (
     <>
